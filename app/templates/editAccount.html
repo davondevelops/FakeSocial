@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Account</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>Edit Account</h1>
+    <p><a href="/homepage">Back</a></p>
+    {% if messages %}
+        <ul class="messages">    
+            {% for message in messages %}    
+                <li {% if message.tags %} class="{{ message.tags }}" style="color: red;" {%endif %}>{{ message }}</li>    
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form action="submit" method="post">
+        {%csrf_token%}
+        <p>First Name: <input type="text" name="fname" value="{{loggedin.first_name}}"></p>
+        <p>Last Name: <input type="text" name="lname" value="{{loggedin.last_name}}"></p>
+        <p>Email: <input type= "text" name= "email" value="{{loggedin.email}}"></p>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

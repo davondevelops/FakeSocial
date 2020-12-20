@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.first_name}} {{user.last_name}}'s Quotes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <h2>{{user.first_name}} {{user.last_name}}'s Quotes</h2>
+    
+        {%for quote in user.quotes.all%}
+            <div class='card' style= "width: 18rem;">
+                <p>{{quote.author}}: {{quote.quote}}</p>
+                <p>{{quote.likes.all|length}} of users liked this <a href="like/quote/{{quote.id}}"><button class='btn btn-primary'>Like</button></a>
+                {%if user.id == loggedin.id%}
+                <a href=delete/quote/{{quote.id}}><button class='btn btn-danger' >Delete</button></a>
+                {%endif%}
+                </p>
+            </div>
+        {%endfor%}
+    
+    <a href="/homepage">Go Back</a>
+</body>
+</html>

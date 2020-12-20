@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>Welcome Back {{loggedin.first_name}} {{loggedin.last_name}}</h1>
+    <p><a href="edit/account">Edit My Account</a> | <a href="logout">Logout here</a></p>
+    <div>
+        <p>Quotes</p>
+        <div class='quotes'>
+            {%for quote in quotes%}
+            <p>{{quote.author}}: {{quote.quote}}</p>
+            <p>Posted by <a href="view/{{quote.user.id}}/quotes">{{quote.user.first_name}} {{quote.user.last_name}}</a></p>
+            <p>{{quote.likes.all|length}} of users liked this <a href="liked/quote/{{quote.id}}"><button class='btn btn-primary'>Like</button></a>
+                {%if quote.user.id == loggedin.id%}
+                <a href=delete/quote/{{quote.id}}><button class='btn btn-danger' >Delete</button></a>
+                {%endif%}</p>
+            {%endfor%}
+        </div>
+    </div>
+    <div>
+        <p>Add a Quote!</p>
+        {% if messages %}
+            <ul class="messages">    
+                {% for message in messages %}    
+                    <li {% if message.tags %} class="{{ message.tags }}" style="color: red;" {%endif %}>{{ message }}</li>    
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form action="create/quote" method="post">
+        {%csrf_token%}
+        <p>Author: <input type="text" name="author"></p>
+        <p>Quote: <textarea name="quote"  cols="30" rows="10"></textarea></p>
+        <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
